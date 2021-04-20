@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+ name: myloadbalancer
+ namespace: $KUBERNETES_NAMESPACE
+ annotations:
+   service.kubernetes.io/ibm-load-balancer-cloud-provider-enable-features: "proxy-protocol"
+   service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public
+   service.kubernetes.io/ibm-load-balancer-cloud-provider-vpc-subnets: $SUBNET_ID
+spec:
+ type: LoadBalancer
+ selector:
+   app : $MYPROJECT-deployment
+ ports:
+  - name: http
+    protocol: TCP
+    port: 8080
+    targetPort: 8080

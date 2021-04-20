@@ -1,0 +1,9 @@
+.terraform.*
+.terraform
+terraform.*
+*.tfvars
+.ibm-project
+app
+local.env
+.DS_Store
+get_helm.sh
