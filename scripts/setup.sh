@@ -2,6 +2,8 @@
 set -e
 set -o pipefail
 
+cd terraform
+
 # Environment variables required for the script
 export IBMCLOUD_API_KEY=$TF_VAR_ibmcloud_api_key
 export BASENAME=$TF_VAR_basename
@@ -18,15 +20,9 @@ ibmcloud login --apikey $IBMCLOUD_API_KEY -r $(terraform output -raw region) -g 
 
 echo "#### Step: Download the starter application"
 
-#echo "MYPROJECT: $MYPROJECT"
-#export RG_VALUE=$(echo -e "1\n4\n3\n$MYPROJECT" | ibmcloud dev create | grep $RESOURCE_GROUP_NAME | awk '{print $1; exit 0}')
-#export RG_VALUE_NO_DOT=$(echo "${RG_VALUE//./}")
-#echo -e "1\n4\n3\n$MYPROJECT\n$RG_VALUE_NO_DOT\nn\n3\n1" | ibmcloud dev create
-
 rm -rf app
 mkdir app
 
-#curl -L https://github.com/IBM-Cloud/kubernetes-node-app/archive/refs/heads/master.zip -o app/kube-node-app.zip
 
 curl -L https://github.com/IBM/container-service-getting-started-wt/archive/refs/heads/master.zip -o app/kube-node-app.zip
 unzip -q app/kube-node-app.zip -d app
@@ -51,27 +47,14 @@ if [[ "$KUBERNETES_NAMESPACE" != "default" ]];  then
    kubectl patch -n $KUBERNETES_NAMESPACE serviceaccount/default -p '{"imagePullSecrets":[{"name": "all-icr-io"}]}' || true
 fi
 
-#cd chart/kubernetesnodeapp
-# Update the app name in the Helm chart 
-#sed -i.bak -e "s/kubernetesnodeapp/$MYPROJECT/g" Chart.yaml
-#helm install $MYPROJECT --namespace $KUBERNETES_NAMESPACE . --set image.repository=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT || true
-
-cd ../../../
+cd ../../../../
 
 kubectl create deployment $MYPROJECT-deployment --image=$MYREGISTRY/$MYNAMESPACE/$MYPROJECT:v1.0.0 || true
 
-cat loadbalancer-template.yaml | \
+cat templates/loadbalancer-template.yaml | \
         MYPROJECT=$MYPROJECT \
         SUBNET_ID=$SUBNET_ID \
         KUBERNETES_NAMESPACE=$KUBERNETES_NAMESPACE \
         envsubst > loadbalancer.yaml
 
 kubectl apply -f loadbalancer.yaml
-
-#sleep 20
-
-#export CURL_HTTP_CODE=$(curl -sL -w "%{http_code}\\n" "https://$MYPROJECT.$INGRESS_SUBDOMAIN/" -o /dev/null)
-#echo "CURL HTTP CODE: $CURL_HTTP_CODE"
-#if [ $CURL_HTTP_CODE == "200" ]; then 
-#    echo "The application is successfully running at https://$MYPROJECT.$INGRESS_SUBDOMAIN/"
-#fi

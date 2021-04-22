@@ -6,4 +6,8 @@ terraform.*
 app
 local.env
 .DS_Store
-get_helm.sh
+loadbalancer.yaml
+*.dot
+*.png
+*.out
+*.json
