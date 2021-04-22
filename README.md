@@ -1,5 +1,8 @@
 # :sunny: Multizone: Kubernetes in a private subnets and VPC load balancer in a public subnet
 
+### Architecture
+![](/diagrams/architecture_diagram.png)
+
 ### Steps
 
 :construction: Complete steps coming soon
