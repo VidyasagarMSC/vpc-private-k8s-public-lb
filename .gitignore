@@ -8,6 +8,5 @@ local.env
 .DS_Store
 loadbalancer.yaml
 *.dot
-*.png
 *.out
 *.json
