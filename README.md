@@ -1,0 +1,1 @@
+# Multizone: Kubernetes in a private subnets and VPC load balancer in a public subnet
