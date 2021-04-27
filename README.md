@@ -5,14 +5,7 @@
 
 ### Steps
 
-:construction: Complete steps coming soon
-
-1. Clone the repo
-2. `cp templates/local.env.template local.env`
-3. Update the file and `source local.env`
-4. `./scripts/main.sh`
-
-
+Refer to this [blog post](https://www.ibm.com/cloud/blog/multizone-kubernetes-and-vpc-load-balancer-setup)
 #### Terraform structure
 
 [![](/diagrams/terraform_visual.png)](diagrams/terraform_visual.png)
