@@ -2,7 +2,7 @@
 set -e
 
 echo "#### Create a kubernetes cluster"
-cd terraform
+cd ../terraform
 tfswitch
 terraform init
 terraform apply -auto-approve

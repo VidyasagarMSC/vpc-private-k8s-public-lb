@@ -13,3 +13,6 @@ Refer to this [blog post](https://www.ibm.com/cloud/blog/multizone-kubernetes-an
 
 ![](/diagrams/graph.png)
 :point_up: Generated using `terraform graph | dot -Tpng > graph.png` command with some additional changes
+
+### Terraform docs 
+:rocket: [Terraform docs](/terraform/README.md)
